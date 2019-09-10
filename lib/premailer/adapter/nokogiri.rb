@@ -106,6 +106,12 @@ class Premailer
           end
         end
 
+        doc.search('mso').each do |el|
+          content = el.children.map(&:to_s).join
+          comment = "<!--[if mso]>#{content}<![end]-->"
+          el.replace(comment)
+        end
+
         if @options[:remove_ids]
           # find all anchor's targets and hash them
           targets = []
